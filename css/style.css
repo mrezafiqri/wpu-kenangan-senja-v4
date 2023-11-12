@@ -86,6 +86,46 @@ body {
 #hamburger-menu {
   display: none;
 }
+
+/* Navbar Search Form Start */
+.navbar .search-form {
+  position: absolute;
+  top: 100%;
+  right: 7%;
+  background-color: #fff;
+  border: 1px solid var(--primary);
+  border-end-start-radius: .5rem;
+  border-end-end-radius: .5rem;
+  width: 50rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: .2s linear;
+  overflow: hidden;
+}
+
+.navbar .search-form.active {
+  transform: scaleY(1);
+}
+
+.navbar .search-form input {
+  height: 100%;
+  width: 100%;
+  font-size: 1.6rem;
+  color: var(--bg);
+  padding: 1rem;
+}
+
+.navbar .search-form label {
+  cursor: pointer;
+  font-size: 2rem;
+  margin-right: 1.5rem;
+  color: var(--bg);
+  display: flex;
+}
+/* Navbar Search Form End */
 /* Navbar End */
 
 /* Hero Section Start */
@@ -392,6 +432,11 @@ footer .credit a {
 
   .navbar .navbar-nav a:hover:after {
     transform: scaleX(.2);
+  }
+
+  .navbar .search-form {
+    width: 90%;
+    right: 2rem;
   }
 
   .about .row {
