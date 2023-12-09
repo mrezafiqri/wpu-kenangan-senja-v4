@@ -122,13 +122,46 @@ form.addEventListener('keyup', function () {
 });
 
 // Kirim data ketika tombol checkout di klik
-checkoutBtn.addEventListener('click', function (e) {
+checkoutBtn.addEventListener('click', async function (e) {
   e.preventDefault();
   const formData = new FormData(form);
   const data = new URLSearchParams(formData);
   const objData = Object.fromEntries(data);
-  const message = formatMessage(objData);
-  window.open('http://wa.me/6281350485509?text=' + encodeURIComponent(message));
+  // Pembayaran lewat wa
+  // const message = formatMessage(objData);
+  // window.open('http://wa.me/6281350485509?text=' + encodeURIComponent(message));
+
+  // Minta transaction tokeng menggunakan ajax / fetch
+  try {
+    const response = await fetch('php/placeOrder.php', {
+      method: 'POST',
+      body: data,
+    });
+    const token = await response.text();
+    // console.log(token)
+    // window.snap.pay(token);
+    window.snap.pay(token, {
+      onSuccess: function(result){
+        /* You may add your own implementation here */
+        alert("payment success!"); console.log(result);
+      },
+      onPending: function(result){
+        /* You may add your own implementation here */
+        alert("wating your payment!"); console.log(result);
+      },
+      onError: function(result){
+        /* You may add your own implementation here */
+        alert("payment failed!"); console.log(result);
+      },
+      onClose: function(){
+        /* You may add your own implementation here */
+        alert('you closed the popup without finishing the payment');
+      }
+    });
+  } catch (error) {
+    console.log(error.message)
+  }
+
 });
 
 // Format pesan whatsapp
